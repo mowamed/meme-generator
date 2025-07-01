@@ -16,12 +16,21 @@ const Gallery: React.FC<GalleryProps> = ({ onImageSelect }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [visibleMemes, setVisibleMemes] = useState(10);
 
+  const customMemes: Meme[] = [
+    {
+      id: 'pepe',
+      name: 'Pepe the Frog',
+      url: 'https://i.imgflip.com/2/26br.jpg',
+    },
+  ];
+
   useEffect(() => {
     fetch('https://api.imgflip.com/get_memes')
       .then(response => response.json())
       .then(data => {
-        setAllMemes(data.data.memes);
-        setMemes(data.data.memes.slice(0, visibleMemes));
+        const combinedMemes = [...customMemes, ...data.data.memes];
+        setAllMemes(combinedMemes);
+        setMemes(combinedMemes.slice(0, visibleMemes));
       });
   }, [visibleMemes]);
 
