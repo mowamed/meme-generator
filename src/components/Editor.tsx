@@ -28,7 +28,7 @@ const Editor: React.FC<EditorProps> = ({ selectedImage }) => {
 
   const handleDownload = () => {
     if (memeRef.current) {
-      html2canvas(memeRef.current).then(canvas => {
+      html2canvas(memeRef.current, { useCORS: true }).then(canvas => {
         const link = document.createElement('a');
         link.download = 'meme.png';
         link.href = canvas.toDataURL('image/png');
@@ -42,7 +42,7 @@ const Editor: React.FC<EditorProps> = ({ selectedImage }) => {
       <h2>Editor</h2>
       {selectedImage && (
         <div ref={memeRef} style={{ position: 'relative', width: '500px' }}>
-          <img src={selectedImage} alt="Selected Meme" className="meme-image" />
+          <img src={selectedImage} alt="Selected Meme" className="meme-image" crossOrigin="anonymous" />
           <Draggable nodeRef={topTextRef}>
             <div ref={topTextRef} className="meme-text top-text-position">
               <div
